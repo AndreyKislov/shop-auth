@@ -3,13 +3,15 @@ package ua.kislov.reg_and_auth_service.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ua.kislov.reg_and_auth_service.exception.UserNotFoundException;
 import ua.kislov.reg_and_auth_service.models.SecurityShopClient;
 import ua.kislov.reg_and_auth_service.services.SecurityService;
 
-@RestController("/auth")
+import javax.net.ssl.SSLEngineResult;
+
+@RestController
+@RequestMapping("/auth")
 public class AuthController {
 
     private final SecurityService securityService;
@@ -20,21 +22,21 @@ public class AuthController {
     }
 
     @GetMapping("/exists-client")
-    ResponseEntity<String> existsByUsername(String username){
-        if(securityService.existByUsername(username))
-            return new ResponseEntity<>("Username is already exist", HttpStatus.OK);
-        else
-            return new ResponseEntity<>("Username is not found", HttpStatus.NOT_FOUND);
+    ResponseEntity<Boolean> existsByUsername(@RequestParam("username") String username) throws UserNotFoundException {
+        System.out.println(username + " from existByUsername");
+        return new ResponseEntity<>(securityService.existByUsername(username), HttpStatus.OK) ;
+
     }
 
-//    @GetMapping("/auth/security-client")
-//    ResponseEntity<SecurityShopClient> findByUsername(String username){
-//
-//    }
-//
-//    @PostMapping("/auth/security-client")
-//    ResponseEntity<SecurityShopClient> save(SecurityShopClient securityShopClient){
-//
-//    }
+    @GetMapping("/security-client")
+    ResponseEntity<SecurityShopClient> findByUsername(@RequestParam("username") String username) throws UserNotFoundException {
+        SecurityShopClient securityShopClient = securityService.findByUsername(username);
+        return new ResponseEntity<>(securityShopClient, HttpStatus.OK);
+    }
 
+    @PostMapping("/security-client")
+    ResponseEntity<Void> save(@RequestBody SecurityShopClient securityShopClient) {
+        securityService.save(securityShopClient);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 }

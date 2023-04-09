@@ -5,6 +5,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -27,6 +28,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
+        System.out.println(authHeader);
         if (authHeader != null && !authHeader.isBlank() && authHeader.startsWith("Bearer ")) {
             String jwt = authHeader.substring(7);
             if(jwt.isBlank()){
@@ -34,12 +36,13 @@ public class JWTAuthFilter extends OncePerRequestFilter {
             }else {
                 try {
                     jwtUtil.validateTokenAndRetrieveClaim(jwt);
+                    filterChain.doFilter(request, response);
                 }catch (JWTVerificationException e){
                     response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid jws token");
                 }
-
             }
+        }else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Jws token is empty");
         }
-        filterChain.doFilter(request, response);
     }
 }
