@@ -13,8 +13,9 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>reg_and_auth_service</name>
     <description>reg_and_auth_service</description>
+    <packaging>war</packaging>
     <properties>
-        <java.version>20</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>

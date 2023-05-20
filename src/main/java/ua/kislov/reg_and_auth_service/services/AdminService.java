@@ -8,12 +8,10 @@ import org.springframework.stereotype.Service;
 import ua.kislov.reg_and_auth_service.exception.UserNotFoundException;
 import ua.kislov.reg_and_auth_service.models.SecurityShopClient;
 import ua.kislov.reg_and_auth_service.repositories.AdminRepository;
-import ua.kislov.reg_and_auth_service.services.interfaces.AdminServiceInterface;
-
-import java.util.List;
+import ua.kislov.reg_and_auth_service.services.interfaces.AdminInterface;
 
 @Service
-public class AdminService implements AdminServiceInterface {
+public class AdminService implements AdminInterface {
 
     private final AdminRepository adminRepository;
 

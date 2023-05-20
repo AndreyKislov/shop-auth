@@ -3,23 +3,20 @@ package ua.kislov.reg_and_auth_service.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.kislov.reg_and_auth_service.dto.SecurityShopClientListDTO;
 import ua.kislov.reg_and_auth_service.models.SecurityShopClient;
-import ua.kislov.reg_and_auth_service.services.interfaces.AdminServiceInterface;
-
-import java.util.List;
+import ua.kislov.reg_and_auth_service.services.interfaces.AdminInterface;
 
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final AdminServiceInterface adminService;
+    private final AdminInterface adminService;
 
     @Autowired
-    public AdminController(AdminServiceInterface adminService) {
+    public AdminController(AdminInterface adminService) {
         this.adminService = adminService;
     }
 

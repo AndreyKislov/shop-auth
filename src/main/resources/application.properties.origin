@@ -1,0 +1,13 @@
+spring.application.name=
+server.port=
+spring.datasource.driver-class-name=
+spring.datasource.url=
+spring.datasource.username=
+spring.datasource.password=
+
+spring.jpa.show-sql=
+spring.jpa.properties.hibernate.dialect=
+spring.jpa.open-in-view=
+spring.mvc.hiddenmethod.filter.enabled=
+
+jwt.secret-string=
